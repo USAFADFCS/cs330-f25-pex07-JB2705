@@ -48,6 +48,10 @@ solve :-
     % Fridays sighting was made by either C4C Chen or the one who saw the fighter aircraft.
     % member([chen, friday, _], Triples),
     % member([_, friday, fighter], Triples),
+    (
+      member([chen, friday, _], Triples);   
+      member([_, friday, fighter], Triples)
+    ),
 
     % The kite was not sighted on Tuesday.
     \+ member([_, tuesday, kite], Triples),
@@ -74,16 +78,15 @@ solve :-
     tell(chen, ChenDay, ChenObject),
     tell(jones, JonesDay, JonesObject).
 
-    % Succeeds if all elements of the argument list are bound and different.
-    % Fails if any elements are unbound or equal to some other element.
-    all_different([H | T]) :- member(H, T), !, fail.
-    all_different([_ | T]) :- all_different(T).
-    all_different([_]).
+% Succeeds if all elements of the argument list are bound and different.
+% Fails if any elements are unbound or equal to some other element.
+all_different([H | T]) :- member(H, T), !, fail.
+all_different([_ | T]) :- all_different(T).
+all_different([_]).
 
-    tell(X, Y, Z) :-
+tell(X, Y, Z) :-
     write('C4C '), write(X), write(' on '), write(Y),
     write(' saw object '), write(Z), write('.'), nl.
-
 
 % The query to get the answer(s) or that there is no answer
 % ?- solve.
